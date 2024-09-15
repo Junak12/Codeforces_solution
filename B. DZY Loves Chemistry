@@ -1,1 +1,55 @@
+#include <bits/stdc++.h>
+using namespace std;
 
+#define opt() ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
+#define endl '\n'
+#define ll long long
+#define ld long double
+
+const ll mx=1e5+123;
+ll vis[mx];
+vector<ll>adj[mx];
+ll cnt=1;
+
+void dfs(ll u)
+{
+    vis[u]=1;
+    //cnt=cnt*2;
+    for(auto d:adj[u])
+    {
+        if(vis[d]==0)
+        {
+            dfs(d);
+        }
+    }
+}
+int main()
+{
+    opt();
+    ll node,edge;
+    cin>>node>>edge;
+
+    ll ans=0;
+    for(ll i=1;i<=edge;i++)
+    {
+        ll x,y;
+        cin>>x>>y;
+        adj[x].push_back(y);
+        adj[y].push_back(x);
+    }
+    for(ll i=1;i<=node;i++)
+    {
+        if(vis[i]==0)
+        {
+            ans++;
+           // cnt=1;
+            dfs(i);
+            //ans=max(ans,cnt);
+        }
+    }
+    //if(edge==0)cout<<"1"<<endl;
+    //else cout<<(node-ans)*2<<endl;
+    ll res=pow(2,node-ans);
+    cout<<res<<endl;
+    return 0;
+}
